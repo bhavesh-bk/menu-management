@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orders</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Orders</h1>
+    <nav>
+      <ul>
+        <li><a href="menus.html">Menus</a></li>
+        <li><a href="dishes.html">Dishes</a></li>
+        <li><a href="ingredients.html">Ingredients</a></li>
+        <li><a href="categories.html">Categories</a></li>
+        <li><a href="users.html">Users</a></li>
+        <li><a href="orders.html">Orders</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h2>Order List</h2>
+      <div id="order-list"></div>
+
+      <h2>Add New Order</h2>
+      <form id="add-order-form">
+        <label for="menuId">Menu ID:</label>
+        <input type="number" id="menuId" name="menuId" required>
+        <label for="userId">User ID:</label>
+        <input type="number" id="userId" name="userId" required>
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" name="quantity" required>
+        <button type="submit">Add Order</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 Menu Management System</p>
+  </footer>
+
+  <script>
+    async function fetchOrders() {
+      try {
+        const response = await fetch('/api/orders');
+        const orders = await response.json();
+        const orderList = document.getElementById('order-list');
+        orderList.innerHTML = orders.map(order => `
+          <div class="item">
+            <h3>Order ID: ${order.id}</h3>
+            <p>Menu ID: ${order.menuId}</p>
+            <p>User ID: ${order.userId}</p>
+            <p>Quantity: ${order.quantity}</p>
+          </div>
+        `).join('');
+      } catch (error) {
+        console.error('Error fetching orders:', error);
+      }
+    }
+
+    document.getElementById('add-order-form').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const formData = new FormData(event.target);
+      const data = Object.fromEntries(formData.entries());
+
+      try {
+        const response = await fetch('/api/orders', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+
+        if (!response.ok) throw new Error('Failed to add order.');
+        alert('Order added successfully!');
+        fetchOrders();
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Error adding order.');
+      }
+    });
+
+    fetchOrders();
+  </script>
+</body>
+</html>

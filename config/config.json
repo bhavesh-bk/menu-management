@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "root",
+    "password": "Bhavesh@2003",
+    "database": "menu_management",
+    "host": "127.0.0.1",
+    "dialect": "sqlite"  
+  },
+  "test": {
+    "username": "root",
+    "password": "Bhavesh@2003",
+    "database": "menu_management",
+    "host": "127.0.0.1",
+    "dialect": "mysql"  
+  },
+  "production": {
+    "username": "root",
+    "password": "Bhavesh@2003",
+    "database": "menu_management",
+    "host": "127.0.0.1",
+    "dialect": "mysql"  
+  }
+}

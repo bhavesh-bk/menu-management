@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Categories</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Categories</h1>
+    <nav>
+      <ul>
+        <li><a href="menus.html">Menus</a></li>
+        <li><a href="dishes.html">Dishes</a></li>
+        <li><a href="ingredients.html">Ingredients</a></li>
+        <li><a href="categories.html">Categories</a></li>
+        <li><a href="users.html">Users</a></li>
+        <li><a href="orders.html">Orders</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h2>Category List</h2>
+      <div id="category-list"></div>
+
+      <h2>Add New Category</h2>
+      <form id="add-category-form">
+        <label for="name">Category Name:</label>
+        <input type="text" id="name" name="name" required>
+        <button type="submit">Add Category</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 Menu Management System</p>
+  </footer>
+
+  <script>
+    async function fetchCategories() {
+      try {
+        const response = await fetch('/api/categories');
+        const categories = await response.json();
+        const categoryList = document.getElementById('category-list');
+        categoryList.innerHTML = categories.map(category => `
+          <div class="item">
+            <h3>${category.name}</h3>
+          </div>
+        `).join('');
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    }
+
+    document.getElementById('add-category-form').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const formData = new FormData(event.target);
+      const data = Object.fromEntries(formData.entries());
+
+      try {
+        const response = await fetch('/api/categories', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+
+        if (!response.ok) throw new Error('Failed to add category.');
+        alert('Category added successfully!');
+        fetchCategories();
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Error adding category.');
+      }
+    });
+
+    fetchCategories();
+  </script>
+</body>
+</html>
