@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Category } = require('../models');
+const {Category} = require('../models/index');
 
 // Get all categories
 router.get('/', async (req, res) => {
@@ -8,6 +8,7 @@ router.get('/', async (req, res) => {
     const categories = await Category.findAll();
     res.json(categories);
   } catch (error) {
+    console.log(error)
     res.status(500).json({ error: 'Failed to fetch categories' });
   }
 });

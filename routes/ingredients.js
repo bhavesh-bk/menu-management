@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Ingredient } = require('../models');
+const {Ingredient} = require('../models/index')
 
 // Get all ingredients
 router.get('/', async (req, res) => {
@@ -8,6 +8,7 @@ router.get('/', async (req, res) => {
     const ingredients = await Ingredient.findAll();
     res.json(ingredients);
   } catch (error) {
+    console.log(error)
     res.status(500).json({ error: 'Failed to fetch ingredients' });
   }
 });

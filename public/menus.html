@@ -42,7 +42,7 @@
   <script>
     async function fetchMenus() {
       try {
-        const response = await fetch('http://localhost:3001/api/menus');
+        const response = await fetch('/api/menus');
         const menus = await response.json();
         const menuList = document.getElementById('menu-list');
         menuList.innerHTML = menus.map(menu => `
@@ -61,7 +61,7 @@
       const data = Object.fromEntries(formData.entries());
 
       try {
-        const response = await fetch('http://localhost:3001/api/menus', {
+        const response = await fetch('/api/menus', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data),

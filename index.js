@@ -3,17 +3,20 @@ const cors = require('cors');
 const path = require('path');
 const http = require('http');
 const fs = require('fs');
-const { Sequelize } = require('sequelize');
+const { Sequelize, DataTypes } = require('sequelize');
+const db = require("./models");
+const Ingredient = require('./models/index')
 
 // Load configuration
 const env = process.env.NODE_ENV || 'development';
 const config = require('./config/config.json')[env];
 
 // Initialize Sequelize
-const sequelize = new Sequelize(config.database, config.username, config.password, {
-  host: config.host,
-  dialect: config.dialect
-});
+// Ingredient(sequelize, DataTypes);
+// const sequelize = new Sequelize(config.database, config.username, config.password, {
+//   host: config.host,
+//   dialect: config.dialect
+// });
 
 // Initialize Express app
 const app = express();
@@ -28,7 +31,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, './public')));
 
 // Import routes
-//const menuRoutes = require('./routes/menus');
+const menuRoutes = require('./routes/menus');
 const dishRoutes = require('./routes/dishes');
 const ingredientRoutes = require('./routes/ingredients');
 const categoryRoutes = require('./routes/categories');
@@ -64,13 +67,13 @@ const options = {
 };
 
 // Sync database and start server
-sequelize.authenticate()
-    .then(() => {
+// sequelize.authenticate()
+//     .then(() => {
         console.log('Database connected...');
         http.createServer(options, app).listen(PORT, () => {
             console.log(`Server is running on http://localhost:${PORT}`);
         });
-    })
-    .catch(err => {
-        console.error('Unable to connect to the database:', err);
-    });
+    // })
+    // .catch(err => {
+    //     console.error('Unable to connect to the database:', err);
+    // });

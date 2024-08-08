@@ -1,3 +1,30 @@
+const { Sequelize, DataTypes } = require('sequelize');
+const IngridientModel = require('./ingredient')
+const CategoryModel = require('./category')
+const DishModel = require('./dish')
+const MenuModel = require('./menus')
+const OrderModel = require('./order')
+const UserModel = require('./user')
+
+const sequelize = new Sequelize('sqlite::memory:')
+const Ingredient = IngridientModel(sequelize,DataTypes)
+const Category = CategoryModel(sequelize,DataTypes)
+const Dish = DishModel(sequelize,DataTypes)
+const Menu = MenuModel(sequelize,DataTypes)
+const Order = OrderModel(sequelize,DataTypes)
+const User = UserModel(sequelize,DataTypes)
+sequelize.sync({ force: false })
+
+
+module.exports={
+    Category,
+    Dish,
+    Menu,
+    Ingredient,
+    Order,
+    User
+}
+
 // const express = require('express');
 // const cors = require('cors');
 // const path = require('path');

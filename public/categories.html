@@ -43,7 +43,7 @@
     // Fetch and display category list
     async function fetchCategories() {
       try {
-        const response = await fetch('http://localhost:3001/api/categories');
+        const response = await fetch('/api/categories');
         const categories = await response.json();
         const categoryList = document.getElementById('category-list');
         categoryList.innerHTML = categories.map(category => `

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Dish } = require('../models');
+const { Dish } = require('../models/index');
 
 // Get all dishes
 router.get('/', async (req, res) => {

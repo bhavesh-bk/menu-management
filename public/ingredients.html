@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Categories</title>
+  <title>Ingredients</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header>
-    <h1>Categories</h1>
+    <h1>Ingredients</h1>
     <nav>
       <ul>
         <li><a href="menus.html">Menus</a></li>
@@ -23,14 +23,14 @@
 
   <main>
     <section>
-      <h2>Category List</h2>
-      <div id="category-list"></div>
+      <h2>Ingredients List</h2>
+      <div id="ingredients"></div>
 
-      <h2>Add New Category</h2>
-      <form id="add-category-form">
-        <label for="name">Category Name:</label>
+      <h2>Add New Ingredients</h2>
+      <form id="add-ingredients-form">
+        <label for="name">Ingredients Name:</label>
         <input type="text" id="name" name="name" required>
-        <button type="submit">Add Category</button>
+        <button type="submit">Add Ingredients</button>
       </form>
     </section>
   </main>
@@ -40,43 +40,43 @@
   </footer>
 
   <script>
-    async function fetchCategories() {
+    async function fetchIngredients() {
       try {
-        const response = await fetch('/api/categories');
-        const categories = await response.json();
-        const categoryList = document.getElementById('category-list');
-        categoryList.innerHTML = categories.map(category => `
+        const response = await fetch('/api/ingredients');
+        const ingredients = await response.json();
+        const ingredientsList = document.getElementById('ingredients-list');
+        ingredientsList.innerHTML = ingredients.map(ingredients => `
           <div class="item">
-            <h3>${category.name}</h3>
+            <h3>${ingredients.name}</h3>
           </div>
         `).join('');
       } catch (error) {
-        console.error('Error fetching categories:', error);
+        console.error('Error fetching ingredients:', error);
       }
     }
 
-    document.getElementById('add-category-form').addEventListener('submit', async (event) => {
+    document.getElementById('add-ingredients-form').addEventListener('submit', async (event) => {
       event.preventDefault();
       const formData = new FormData(event.target);
       const data = Object.fromEntries(formData.entries());
 
       try {
-        const response = await fetch('/api/categories', {
+        const response = await fetch('/api/ingredients', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data),
         });
 
-        if (!response.ok) throw new Error('Failed to add category.');
-        alert('Category added successfully!');
+        if (!response.ok) throw new Error('Failed to add ingredients.');
+        alert('Ingredients added successfully!');
         fetchCategories();
       } catch (error) {
         console.error('Error:', error);
-        alert('Error adding category.');
+        alert('Error adding ingredients.');
       }
     });
 
-    fetchCategories();
+    fetchIngredients();
   </script>
 </body>
 </html>
